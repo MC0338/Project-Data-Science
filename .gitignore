@@ -1,5 +1,6 @@
 # Ignore archive folder
-/archive/
+archive/
+swm_env/
 
 # Python bytecode
 __pycache__/
@@ -14,10 +15,12 @@ __pycache__/
 reports/figures/
 
 # Virtual environments
+.venv/
+swm_env/
 venv/
-.env/
 env/
 *.venv
+.env/
 
 # System files
 .DS_Store

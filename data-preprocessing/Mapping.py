@@ -3,11 +3,16 @@ pd.set_option('future.no_silent_downcasting', True)
 from Normalisering import normaliseer_kolommen
 from Kolommen import behoud_kolommen
 
-from paths import RAW_DATA, PROCESSED_DATA, OUTPUT_DIR
+import sys
+from pathlib import Path
+
+ROOT = Path.cwd().parent
+sys.path.append(str(ROOT))
+from paths import RAW_DATA, OUTPUT_DIR
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = r"C:\Users\bjarn\Desktop\Bjarne\Welzijnsmonitor2025_test.csv"
-output_excel = r"E:\PyCharm\PyCharmCode\AutomaticMapping\Leeg Excel.xlsx"
+input_csv = RAW_DATA/"Welzijnsmonitor2025_test.csv"
+output_excel = OUTPUT_DIR/"test_swm.csv"
 
 mapping = {
     "Soms": 3,
@@ -81,6 +86,6 @@ df = df.replace(mapping)
 # Normalisatie uitvoeren in het tweede script
 df = normaliseer_kolommen(df)
 
-df.to_excel(output_excel, index=False, engine='openpyxl')
+df.tocsv(output_excel, index=False, engine='openpyxl')
 
 print(f"Bestand is getransformeerd naar Excel! {output_excel}")

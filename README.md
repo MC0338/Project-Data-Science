@@ -14,18 +14,17 @@ Analyzing the student wellbeing monitor survey by AM and BIM students.
 │       └── Welzijnsmonitor2025_prep.xlsx
 ├── data-analysis          <- Trained models, and model summaries.
 │   └── DataAnalysis.ipynb
-├── data-preprocessing
+├── data-preprocessing     <- Clean and preprocess the data.
 │   ├── Kolommen.py
 │   ├── Mapping.py
 │   └── Normalisering.py
 ├── docs                   <- A default mkdocs project; see www.mkdocs.org for details
-├── output
+├── output                 <- All outputs created from analysis should be in here.
 │   ├── data_with_normalized_latent_variables.csv
 │   ├── descriptive_statistics.csv
 │   ├── latent_variable_scores.csv
 │   ├── model_coefficients.csv
 │   └── model_coefficients.xlsx
-├── paths.py
 ├── references             <- Data dictionaries, manuals, and all other explanatory materials.
 ├── reports                <- Generated analysis as HTML, PDF, LaTeX, etc.
 │   └── figures            <- Generated graphics and figures to be used in reporting
@@ -44,30 +43,33 @@ Analyzing the student wellbeing monitor survey by AM and BIM students.
 
 ## Getting started
 
-### IMPORTANT: Python 3.12 is not compatible with semopy>=2.4, so do not use 3.12
+### IMPORTANT: Python 3.12 is not compatible with semopy>=2.4, so do not use 3.12. We recommend Python 3.11.
 
 These are the steps to create the enviroment in your local machine, follow these steps in your terminal/command prompt (cmd):
-- Instead, create a fresh venv (or conda env) with Python 3.10/3.11:
+1. Create a fresh virtual environment (or conda env) with Python 3.10/3.11:
 ```
 # macOS/Linux
-python3.11 -m venv swm_env
+python3.11 -m venv .venv
 
 # Windows
-py -3.11 -m venv swm_env
+py -3.11 -m venv .venv
 ```
 
-- Activate the environment:
+2. Activate the virtual environment:
 ```
-# Mac/Linux
-source swm_env/bin/activate
+# macOS / Linux
+source .venv/bin/activate
 
 # Windows
-swm_env\Scripts\activate
+.venv\Scripts\activate
 ```
 
-- Run:
+3. Install project dependencies:
 ```
 pip install -r requirements.txt
 ```
+This will install all required packages for the project.
+
+
 --------
 

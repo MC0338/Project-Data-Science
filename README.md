@@ -1,61 +1,45 @@
-# Data-Science-Project
+# Welzijnsmonitor Data Science Project
 
-<a target="_blank" href="https://cookiecutter-data-science.drivendata.org/">
-    <img src="https://img.shields.io/badge/CCDS-Project%20template-328F97?logo=cookiecutter" />
-</a>
-
-Analyzing the student wellbeing monitor survey
+Analyzing the student wellbeing monitor survey by AM and BIM students.
 
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
-├── README.md          <- The top-level README for developers using this project.
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         data_science_project and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── data_science_project   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes data_science_project a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── predict.py          <- Code to run model inference with trained models          
-    │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+│   ├── processed                                                 <- The final, canonical data sets for modeling.
+│   │   ├── Welzijnsmonitor2024_scaled_normalised_UTF8.csv
+│   │   └── Welzijnsmonitor2025_scaled_normalised_UTF8.csv
+│   └── raw                                                       <- The original, immutable data dump.
+│       ├── Welzijnsmonitor2025_prep_dataGroepen.xlsx
+│       └── Welzijnsmonitor2025_prep.xlsx
+├── data-analysis                                                 <- Trained models, and model summaries.
+│   └── DataAnalysis.ipynb
+├── data-preprocessing
+│   ├── Kolommen.py
+│   ├── Mapping.py
+│   └── Normalisering.py
+├── docs                                                          <- A default mkdocs project; see www.mkdocs.org for details
+├── output
+│   ├── data_with_normalized_latent_variables.csv
+│   ├── descriptive_statistics.csv
+│   ├── latent_variable_scores.csv
+│   ├── model_coefficients.csv
+│   └── model_coefficients.xlsx
+├── paths.py
+├── references                                                    <- Data dictionaries, manuals, and all other explanatory materials.
+├── reports                                                       <- Generated analysis as HTML, PDF, LaTeX, etc.
+│   └── figures                                                   <- Generated graphics and figures to be used in reporting
+│       ├── correlation_matrix.png
+│       ├── pd
+│       ├── pd.png
+│       ├── pd2
+│       ├── pd2.png
+│       ├── pd3
+│       └── pd3.png
+├── .gitignore                                                    <- Remove redudant or irrelevant files/folders from git commit.
+├── paths.py                                                      <- Relative path configuration (prevent absolute path problem).
+├── README.md                                                     <- The top-level README for developers using this project.
+├── requirements.txt                                              <- The requirements file for reproducing the analysis environment, e.g.
 ```
-
 --------
 

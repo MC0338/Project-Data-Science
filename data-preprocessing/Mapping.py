@@ -3,11 +3,11 @@ pd.set_option('future.no_silent_downcasting', True)
 from Normalisering import normaliseer_kolommen
 from Kolommen import behoud_kolommen
 
-from paths import RAW_DATA, PROCESSED_DATA, OUTPUT_DIR
+#from paths import RAW_DATA, PROCESSED_DATA, OUTPUT_DIR
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = r"C:\Users\bjarn\Desktop\Bjarne\Welzijnsmonitor2025_test.csv"
-output_excel = r"E:\PyCharm\PyCharmCode\AutomaticMapping\Leeg Excel.xlsx"
+input_csv = r"C:\Users\bjarn\OneDrive\Bureaublad\Test\Welzijnsmonitor2023_prep (1).csv"
+output_csv = r"C:\Users\bjarn\OneDrive\Bureaublad\Test\Leeg UTF_8.csv"
 
 mapping = {
     "Soms": 3,
@@ -55,7 +55,7 @@ mapping = {
     "Zeer eens": 5,
     "Zeer gezond": 5,
     "Niet van toepassing": None,
-    "Ik weet het nog niet": 3,
+    "Ik weet het nog niet": None,
     "Nee": 1,
 }
 
@@ -78,9 +78,27 @@ df[depr_cols] = df[depr_cols].replace({"Soms": 2})
 # Mapping toepassen
 df = df.replace(mapping)
 
+#Ompolen van depr_4 en depr_6 -> negatieve vraag
+reverse_mapping = {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 1,
+}
+for col in ["Depr_4", "Depr_6"]:
+    if col in df.columns:
+        df[col] = df[col].map(reverse_mapping)
+
 # Normalisatie uitvoeren in het tweede script
 df = normaliseer_kolommen(df)
 
-df.to_excel(output_excel, index=False, engine='openpyxl')
+df.to_csv(
+    output_csv,
+    sep=';',
+    decimal=',',
+    encoding='utf-8-sig',
+    index=False,
+    quoting=1 
+)
 
-print(f"Bestand is getransformeerd naar Excel! {output_excel}")
+print(f"Bestand is getransformeerd naar CSV! {output_csv}")

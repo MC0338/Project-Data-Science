@@ -41,6 +41,7 @@ Kolommen_Blijven = [
     "Depr_7",
     "Depr_8",
     "Cijfer_huidig_1",
+    "StPunt_beh",
     "Vertr",
     "StopInt",
     "Hulp_1",

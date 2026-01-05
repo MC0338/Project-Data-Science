@@ -6,18 +6,19 @@ from Kolommen import behoud_kolommen
 import sys
 from pathlib import Path
 
-ROOT = Path.cwd().parent
-sys.path.append(str(ROOT))
-from paths import RAW_DATA, OUTPUT_DIR
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from paths import RAW_DATA, PROCESSED_DATA
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = RAW_DATA/"Welzijnsmonitor2025_test.csv"
-output_excel = OUTPUT_DIR/"test_swm.csv"
+input_excel = RAW_DATA/"Welzijnsmonitor2025_prep.xlsx"
+output_csv = PROCESSED_DATA/"Welzijnsmonitor2025_processed.csv"
 
 mapping = {
     "Soms": 3,
     "Nee, maar ik verwacht wel vertraging op te gaan lopen": 1,
-    "Ja": 5,
+    "Ja": 1,
     "Nooit": 1,
     "Helemaal geen stress": 1,
     "Nooit of bijna nooit": 1,
@@ -60,13 +61,12 @@ mapping = {
     "Zeer eens": 5,
     "Zeer gezond": 5,
     "Niet van toepassing": None,
-    "Ik weet het nog niet": 3,
-    "Nee": 1,
+    "Ik weet het nog niet": None,
+    "Nee": 0,
 }
 
 # Lees CSV bestand
-df = pd.read_csv(input_csv, sep=';', encoding='utf-8-sig',
-                 quotechar='"', on_bad_lines='skip')
+df = pd.read_excel(input_excel, engine="openpyxl")
 
 # Strip whitespace
 df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
@@ -84,8 +84,8 @@ df[depr_cols] = df[depr_cols].replace({"Soms": 2})
 df = df.replace(mapping)
 
 # Normalisatie uitvoeren in het tweede script
-df = normaliseer_kolommen(df)
+# df = normaliseer_kolommen(df)
 
-df.tocsv(output_excel, index=False, engine='openpyxl')
+df.to_csv(output_csv)
 
-print(f"Bestand is getransformeerd naar Excel! {output_excel}")
+print(f"Bestand is getransformeerd naar Excel! {output_csv}")

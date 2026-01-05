@@ -3,16 +3,22 @@ pd.set_option('future.no_silent_downcasting', True)
 from Normalisering import normaliseer_kolommen
 from Kolommen import behoud_kolommen
 
-#from paths import RAW_DATA, PROCESSED_DATA, OUTPUT_DIR
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from paths import RAW_DATA, PROCESSED_DATA
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = r"C:\Users\bjarn\OneDrive\Bureaublad\Test\Welzijnsmonitor2023_prep (1).csv"
-output_csv = r"C:\Users\bjarn\OneDrive\Bureaublad\Test\Leeg UTF_8.csv"
+input_excel = RAW_DATA/"Welzijnsmonitor2025_prep.xlsx"
+output_csv = PROCESSED_DATA/"Welzijnsmonitor2025_processed.csv"
 
 mapping = {
     "Soms": 3,
     "Nee, maar ik verwacht wel vertraging op te gaan lopen": 1,
-    "Ja": 5,
+    "Ja": 1,
     "Nooit": 1,
     "Helemaal geen stress": 1,
     "Nooit of bijna nooit": 1,
@@ -56,12 +62,11 @@ mapping = {
     "Zeer gezond": 5,
     "Niet van toepassing": None,
     "Ik weet het nog niet": None,
-    "Nee": 1,
+    "Nee": 0,
 }
 
 # Lees CSV bestand
-df = pd.read_csv(input_csv, sep=';', encoding='utf-8-sig',
-                 quotechar='"', on_bad_lines='skip')
+df = pd.read_excel(input_excel, engine="openpyxl")
 
 # Strip whitespace
 df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
@@ -90,7 +95,7 @@ for col in ["Depr_4", "Depr_6"]:
         df[col] = df[col].map(reverse_mapping)
 
 # Normalisatie uitvoeren in het tweede script
-df = normaliseer_kolommen(df)
+# df = normaliseer_kolommen(df)
 
 df.to_csv(
     output_csv,

@@ -6,13 +6,18 @@ from Kolommen import behoud_kolommen
 import sys
 from pathlib import Path
 
-ROOT = Path.cwd().parent
-sys.path.append(str(ROOT))
+# Step 1: find project root (where paths.py lives)
+ROOT = Path.cwd().resolve()
+while not (ROOT / "paths.py").exists():
+    ROOT = ROOT.parent
+
+# Step 2: make it importable
+sys.path.insert(0, str(ROOT))
 from paths import RAW_DATA, OUTPUT_DIR
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = RAW_DATA/"Welzijnsmonitor2025_test.csv"
-output_excel = OUTPUT_DIR/"test_swm.csv"
+input_csv = RAW_DATA/"Welzijnsmonitor2025_prep.csv"
+output_csv = OUTPUT_DIR/"test_swm.csv"
 
 mapping = {
     "Soms": 3,
@@ -83,9 +88,28 @@ df[depr_cols] = df[depr_cols].replace({"Soms": 2})
 # Mapping toepassen
 df = df.replace(mapping)
 
+#Ompolen van depr_4 en depr_6 -> negatieve vraag
+reverse_mapping = {
+    1: 4,
+    2: 3,
+    3: 2,
+    4: 1,
+}
+for col in ["Depr_4", "Depr_6"]:
+    if col in df.columns:
+        df[col] = df[col].map(reverse_mapping)
+
+
 # Normalisatie uitvoeren in het tweede script
 df = normaliseer_kolommen(df)
 
-df.tocsv(output_excel, index=False, engine='openpyxl')
+df.to_csv(
+    output_csv,
+    sep=';',
+    decimal=',',
+    encoding='utf-8-sig',
+    index=False,
+    quoting=1 
+)
 
-print(f"Bestand is getransformeerd naar Excel! {output_excel}")
+print(f"Bestand is getransformeerd naar CSV! {output_csv}")

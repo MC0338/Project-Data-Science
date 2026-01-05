@@ -13,31 +13,31 @@ def norm_0_50(value):
     v = _to_float(value)
     if v is None:
         return None
-    return 1 + ((v * 4.0) / 50.0)
+    return round(1 + ((v * 4.0) / 50.0), 2)
 
 def norm_1_3(value):
     v = _to_float(value)
     if v is None:
         return None
-    return 1 + ((v - 1) * 4.0 / 2.0)
+    return round(1 + ((v - 1) * 4.0 / 2.0), 2)
 
 def norm_1_4(value):
     v = _to_float(value)
     if v is None:
         return None
-    return 1 + ((v - 1) * 4.0 / 3.0)
+    return round(1 + ((v - 1) * 4.0 / 3.0), 2)
 
 def norm_0_5(value):
     v = _to_float(value)
     if v is None:
         return None
-    return 1 + ((v * 4.0) / 5.0)
+    return round(1 + ((v * 4.0) / 5.0), 2)
 
 def norm_0_10(value):
     v = _to_float(value)
     if v is None:
         return None
-    return 1 + ((v * 4.0) / 10.0)
+    return round(1 + ((v * 4.0) / 10.0), 2)
 
 
 

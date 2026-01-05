@@ -95,3 +95,17 @@ def normaliseer_kolommen(df):
             df[kolom] = df[kolom].apply(functie)
 
     return df
+
+def normalize_decimal_columns(df):
+    df = df.copy()
+
+    for col in df.columns:
+        if df[col].dtype == "object":
+            # replace comma decimals with dots
+            df[col] = (
+                df[col]
+                .str.replace(",", ".", regex=False)
+            )
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+
+    return df

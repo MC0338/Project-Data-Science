@@ -95,7 +95,7 @@ for col in ["Depr_4", "Depr_6"]:
         df[col] = df[col].map(reverse_mapping)
 
 # Normalisatie uitvoeren in het tweede script
-# df = normaliseer_kolommen(df)
+df = normaliseer_kolommen(df)
 
 df.to_csv(
     output_csv,

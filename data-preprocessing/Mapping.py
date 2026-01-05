@@ -6,23 +6,19 @@ from Kolommen import behoud_kolommen
 import sys
 from pathlib import Path
 
-# Step 1: find project root (where paths.py lives)
-ROOT = Path.cwd().resolve()
-while not (ROOT / "paths.py").exists():
-    ROOT = ROOT.parent
-
-# Step 2: make it importable
+ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from paths import RAW_DATA, OUTPUT_DIR
+
+from paths import RAW_DATA, PROCESSED_DATA
 
 #input en ouput mogen niet hetzelfde zijn
-input_csv = RAW_DATA/"Welzijnsmonitor2025_prep.csv"
-output_csv = OUTPUT_DIR/"test_swm.csv"
+input_excel = RAW_DATA/"Welzijnsmonitor2025_prep.xlsx"
+output_csv = PROCESSED_DATA/"Welzijnsmonitor2025_processed.csv"
 
 mapping = {
     "Soms": 3,
     "Nee, maar ik verwacht wel vertraging op te gaan lopen": 1,
-    "Ja": 5,
+    "Ja": 1,
     "Nooit": 1,
     "Helemaal geen stress": 1,
     "Nooit of bijna nooit": 1,
@@ -65,13 +61,12 @@ mapping = {
     "Zeer eens": 5,
     "Zeer gezond": 5,
     "Niet van toepassing": None,
-    "Ik weet het nog niet": 3,
-    "Nee": 1,
+    "Ik weet het nog niet": None,
+    "Nee": 0,
 }
 
 # Lees CSV bestand
-df = pd.read_csv(input_csv, sep=';', encoding='utf-8-sig',
-                 quotechar='"', on_bad_lines='skip')
+df = pd.read_excel(input_excel, engine="openpyxl")
 
 # Strip whitespace
 df = df.map(lambda x: x.strip() if isinstance(x, str) else x)
@@ -101,7 +96,7 @@ for col in ["Depr_4", "Depr_6"]:
 
 
 # Normalisatie uitvoeren in het tweede script
-df = normaliseer_kolommen(df)
+# df = normaliseer_kolommen(df)
 
 df.to_csv(
     output_csv,

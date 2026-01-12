@@ -153,9 +153,24 @@ Kolommen_Blijven = [
 
 def behoud_kolommen(df: pd.DataFrame) -> pd.DataFrame:
     """
-    Behoudt alleen de kolommen in Kolommen_Blijven.
-    Alle andere kolommen worden verwijderd.
+    Keep only the columns listed in Kolommen_Blijven and remove all others.
+
+    Steps:
+    - Identify columns from Kolommen_Blijventhat are missing in the dataset and print them.
+    - Identify columns that will be removed because they are not in the required list.
+    - Return a DataFrame containing only the required columns.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        The input DataFrame containing all columns.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A DataFrame with only the columns specified in Kolommen_Blijven.
     """
+
 
     # Kolommen die ontbreken
     ontbrekend = [k for k in Kolommen_Blijven if k not in df.columns]

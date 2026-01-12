@@ -1,6 +1,7 @@
 import pandas as pd
 
 def _to_float(x):
+    
     if pd.isna(x):
         return None
     x = str(x).strip().replace(",", ".")
@@ -39,9 +40,12 @@ def norm_0_10(value):
         return None
     return round(1 + ((v * 4.0) / 10.0), 2)
 
-
-
-
+# -----------------------------------------------------------------------------
+# Mapping of column names to their corresponding normalization functions.
+#
+# Each column is associated with a function that converts its native scale
+# (e.g., 1–4, 0–10, 0–50, 1–3, 0–5) to a unified 1–5 scale for comparability.
+# -----------------------------------------------------------------------------
 kolom_formules = {
 
    # Kolommen die de reeks 1-4 gebruiken
@@ -97,6 +101,27 @@ def normaliseer_kolommen(df):
     return df
 
 def normalize_decimal_columns(df):
+    """
+    Convert object-typed columns with comma decimals to numeric dtype.
+
+    Steps:
+    1) Work on a copy of the DataFrame to avoid mutating the caller's reference.
+    2) For each object column:
+       - Replace comma (',') decimals with dots ('.') without using regex.
+       - Convert to numeric using pd.to_numeric(..., errors="coerce"),
+         coercing invalid entries to NaN.
+
+    Parameters
+    ----------
+    df : pandas.DataFrame
+        Input DataFrame potentially containing object columns with comma decimals.
+
+    Returns
+    -------
+    pandas.DataFrame
+        A new DataFrame where applicable columns are converted to numeric dtype.
+    """
+
     df = df.copy()
 
     for col in df.columns:
